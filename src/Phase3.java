@@ -188,14 +188,13 @@ public class Phase3 {
         // create statement and execute the query
         Statement stmt = conn.createStatement();
         String str = String.format(
-                "SELECT Business.name, street_address, zipcode, Business.num_tips, Users.name as usersname, Tips.tip_text, Tips.tip_timestamp FROM Business JOIN Tips ON Business.business_id = Tips.business_id JOIN Users ON Tips.user_id = Users.user_id JOIN Friends ON Users.user_id = Friends.friend_id WHERE Business.city = '%s' AND Business.state = '%s' AND Friends.user_id = '%s' ORDER BY Business.name;",
+                "SELECT Business.name, street_address, zipcode, Business.num_tips, Users.name as usersname, Tips.tip_text, Tips.tip_timestamp, Tips.likes FROM Business JOIN Tips ON Business.business_id = Tips.business_id JOIN Users ON Tips.user_id = Users.user_id JOIN Friends ON Users.user_id = Friends.friend_id WHERE Business.city = '%s' AND Business.state = '%s' AND Friends.user_id = '%s' ORDER BY Business.name;",
                 city_string, state_string, user_id);
         // create a statement and execute the query
         final ResultSet rs = stmt.executeQuery(str);
 
         // print the results
-        int ctr = 1;
-        String header = String.format("\n%-3s | %-12s | %-19s | %-5s | %-50s", "No.", "Name", "Timestamp",
+        String header = String.format("\n%-3s | %-12s | %-19s | %-3s | %-50s", "No.", "Name", "Timestamp",
                 "Likes", "Tip Text");
         System.out.println(header);
         // print a line of dashes to separate the header from the data
@@ -203,19 +202,16 @@ public class Phase3 {
         Arrays.fill(chars, '-');
         System.out.println(new String(chars));
         // print the data itself
+        int ctr = 1;
         while (rs.next()) {
-            String business_name = rs.getString("name");
-            String street_address = rs.getString("street_address");
-            String zipcode = rs.getString("zipcode");
-            String num_tips = rs.getString("num_tips");
             String user_name = rs.getString("usersname");
-            String tip = rs.getString("tip_text");
             String timestamp = rs.getString("tip_timestamp");
+            String likes = rs.getString("likes");
+            String tiptxt = rs.getString("tip_text");
 
-            String str2 = String.format("%s|, %s|, %s|, %s|, %s|, %s|, %s", business_name, street_address, zipcode,
-                    num_tips, user_name, tip, timestamp);
+            String str2 = String.format("%-3s | %-12s | %-19s | %-3s | %-50s", ctr, user_name, timestamp, likes,
+                    tiptxt);
             System.out.println(str2);
-
             ctr++;
         }
 
