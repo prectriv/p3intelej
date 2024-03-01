@@ -3,13 +3,16 @@ import java.util.Scanner;
 import java.util.Arrays;
 import java.util.Date;
 
+/* Team 12 - Phase 3
+Mark Bonavita, Yi Hong Jiang, Taras Pylypenko
+ */
 public class Phase3 {
     // Replace the "USERID" and "PASSWORD" with your PostgreSQL username and
     // password (the postgreSQL user you created in Phase2).
 
     // TODO: ensure this is changed to your local postgres username and password
-    private static final String USERID = "xavier";
-    private static final String PASSWORD = "0509";
+    private static final String USERID = "";
+    private static final String PASSWORD = "";
     static Scanner in = new Scanner(System.in);
 
     public static Connection connect2postgres() {
@@ -235,21 +238,13 @@ public class Phase3 {
 
         try {
             switch (input) {
-                case "1":
-                    searchByCategory(conn);
-                    break;
-
-                case "2":
-                    searchFriendsTips(conn);
-                    break;
-
-                case "3":
+                case "1" -> searchByCategory(conn);
+                case "2" -> searchFriendsTips(conn);
+                case "3" -> {
                     conn.close();
                     System.out.println("Connection closed.");
-                    break;
-
-                default:
-                    System.out.println("Invalid input");
+                }
+                default -> System.out.println("Invalid input");
             }
 
         } catch (SQLException e) {
@@ -271,20 +266,10 @@ public class Phase3 {
 
         try {
             switch (input) {
-                case "1":
-                    displayTips(conn);
-                    break;
-
-                case "2":
-                    addTip(conn);
-                    break;
-
-                case "3":
-                    chooseOption(conn);
-                    break;
-
-                default:
-                    System.out.println("Invalid input");
+                case "1" -> displayTips(conn);
+                case "2" -> addTip(conn);
+                case "3" -> chooseOption(conn);
+                default -> System.out.println("Invalid input");
             }
 
         } catch (SQLException e) {
@@ -303,6 +288,5 @@ public class Phase3 {
         }
 
         chooseOption(connection);
-
     }
 }
